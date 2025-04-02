@@ -8,35 +8,33 @@ using std::string;
 bool SnowSeed_init(UDF_INIT* initid, UDF_ARGS* args, char* message) {
 	bool error = false;
 	int type = 0;
-	if (args->arg_count != 2) { error = true; type = 1; }
-	if (args->arg_type[0] != INT_RESULT) { error = true; type = 2; }
+	if (args->arg_count != 2)  error = true;
+	if (args->arg_type[0] != INT_RESULT)  error = true;
 	else {
 		try {
 			int num = atoi(args->args[0]);
-			if (num > 31) { error = true; type = 3; }
+			if (num > 31)  error = true; 
 		}
 		catch (const std::invalid_argument& e) {
 			error = true;
-			type = 4;
 		}
 		catch (const std::out_of_range& e) {
 			error = true;
-			type = 5;
+			
 		}
 	}
-	if (args->arg_type[1] != INT_RESULT) { error = true; type = 6; }
+	if (args->arg_type[1] != INT_RESULT)  error = true; 
 	else {
 		try {
 			int num = atoi(args->args[1]);
-			if (num > 31) { error = true; type = 7; }
+			if (num > 31)  error = true;
 		}
 		catch (const std::invalid_argument& e) {
 			error = true;
-			type = 8;
+			
 		}
 		catch (const std::out_of_range& e) {
 			error = true;
-			type = 9;
 		}
 	}
 	if (error) strcpy(message, (u8"参数必须是两位小于32的整数" + std::to_string(type)).c_str());
