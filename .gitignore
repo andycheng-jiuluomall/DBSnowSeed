@@ -6,3 +6,5 @@
 /Sqlserver/bin/Debug
 /Sqlserver/obj/Debug
 /Sqlserver/DBSnowSeed.Sqlserver.sqlproj.user
+/Sqlserver/DBSnowSeed.Sqlserver.dbmdl
+/Sqlserver/DBSnowSeed.Sqlserver.jfm
