@@ -35,77 +35,50 @@ public class IdWorker
     public IdWorker(long workerId, long datacenterId, long sequence = 0L)
     {
         // 如果超出范围就抛出异常
-        if (workerId > MaxWorkerId || workerId < 0)
-        {
-            throw new ArgumentException(string.Format("worker Id 必须大于0，且不能大于MaxWorkerId： {0}", MaxWorkerId));
-        }
-
-        if (datacenterId > MaxDatacenterId || datacenterId < 0)
-        {
-            throw new ArgumentException(string.Format("region Id 必须大于0，且不能大于MaxWorkerId： {0}", MaxDatacenterId));
-        }
-
+        if (workerId > MaxWorkerId || workerId < 0) throw new ArgumentException($"worker Id 必须大于0，且不能大于MaxWorkerId： {MaxWorkerId}");
+        if (datacenterId > MaxDatacenterId || datacenterId < 0) throw new ArgumentException($"region Id 必须大于0，且不能大于MaxWorkerId： {MaxDatacenterId}");
         //先检验再赋值
         WorkerId = workerId;
         DatacenterId = datacenterId;
         _sequence = sequence;
     }
 
-    readonly object _lock = new Object();
+    readonly object _lock = new();
     public virtual long NextId()
     {
         lock (_lock)
         {
             var timestamp = TimeGen();
-            if (timestamp < _lastTimestamp)
-            {
-                throw new Exception(string.Format("时间戳必须大于上一次生成ID的时间戳.  拒绝为{0}毫秒生成id", _lastTimestamp - timestamp));
-            }
-
+            if (timestamp < _lastTimestamp) throw new Exception($"时间戳必须大于上一次生成ID的时间戳.  拒绝为{_lastTimestamp - timestamp}毫秒生成id");
             //如果上次生成时间和当前时间相同,在同一毫秒内
             if (_lastTimestamp == timestamp)
             {
                 //sequence自增，和sequenceMask相与一下，去掉高位
                 _sequence = (_sequence + 1) & SequenceMask;
                 //判断是否溢出,也就是每毫秒内超过1024，当为1024时，与sequenceMask相与，sequence就等于0
-                if (_sequence == 0)
-                {
-                    //等待到下一毫秒
-                    timestamp = TilNextMillis(_lastTimestamp);
-                }
+                //等待到下一毫秒
+                if (_sequence == 0) timestamp = TilNextMillis(_lastTimestamp);
             }
-            else
-            {
-                //如果和上次生成时间不同,重置sequence，就是下一毫秒开始，sequence计数重新从0开始累加,
-                //为了保证尾数随机性更大一些,最后一位可以设置一个随机数
-                _sequence = 0;//new Random().Next(10);
-            }
+            //如果和上次生成时间不同,重置sequence，就是下一毫秒开始，sequence计数重新从0开始累加,
+            //为了保证尾数随机性更大一些,最后一位可以设置一个随机数
+            else _sequence = 0;//new Random().Next(10);
             _lastTimestamp = timestamp;
             return ((timestamp - Twepoch) << TimestampLeftShift) | (DatacenterId << DatacenterIdShift) | (WorkerId << WorkerIdShift) | _sequence;
         }
     }
-
     // 防止产生的时间比之前的时间还要小（由于NTP回拨等问题）,保持增量的趋势.
     protected virtual long TilNextMillis(long lastTimestamp)
     {
         var timestamp = TimeGen();
-        while (timestamp <= lastTimestamp)
-        {
-            timestamp = TimeGen();
-        }
+        while (timestamp <= lastTimestamp) timestamp = TimeGen();
         return timestamp;
     }
-
     // 获取当前的时间戳
-    protected virtual long TimeGen()
-    {
-        var Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
-    }
+    protected virtual long TimeGen() => (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
 }
 public class SnowSeed
 {
-    private readonly static SnowSeed Singleton = new SnowSeed();
+    private readonly static SnowSeed Singleton = new();
     private IdWorker snowFlake;
     SnowSeed()
     {
@@ -113,18 +86,8 @@ public class SnowSeed
         var workerId = 0;
         //数据中心编号
         var datacenterId = 0;
-        snowFlake = new IdWorker(workerId, datacenterId);
+        snowFlake = new(workerId, datacenterId);
     }
-    IdWorker getInstance()
-    {
-        return snowFlake;
-    }
-
-    public static long NewID
-    {
-        get
-        {
-            return Singleton.getInstance().NextId();
-        }
-    }
+    IdWorker getInstance() => snowFlake;
+    public static long NewID { get => Singleton.getInstance().NextId(); }
 }

@@ -17,7 +17,7 @@
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
-	<LangVersion>9.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassFiles.cs" />
-    <Compile Include="getSnowID.cs" />
+    <Compile Include="SnowSeed.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data" />
