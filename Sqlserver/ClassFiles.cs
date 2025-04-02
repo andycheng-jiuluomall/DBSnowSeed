@@ -76,18 +76,3 @@ public class IdWorker
     // 获取当前的时间戳
     protected virtual long TimeGen() => (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
 }
-public class SnowSeed
-{
-    private readonly static SnowSeed Singleton = new();
-    private IdWorker snowFlake;
-    SnowSeed()
-    {
-        //工作机器编号 
-        var workerId = 0;
-        //数据中心编号
-        var datacenterId = 0;
-        snowFlake = new(workerId, datacenterId);
-    }
-    IdWorker getInstance() => snowFlake;
-    public static long NewID { get => Singleton.getInstance().NextId(); }
-}
