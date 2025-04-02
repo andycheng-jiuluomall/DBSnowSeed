@@ -35,8 +35,8 @@ public class IdWorker
     public IdWorker(long workerId, long datacenterId, long sequence = 0L)
     {
         // 如果超出范围就抛出异常
-        if (workerId > MaxWorkerId || workerId < 0) throw new ArgumentException($"worker Id 必须大于0，且不能大于MaxWorkerId： {MaxWorkerId}");
-        if (datacenterId > MaxDatacenterId || datacenterId < 0) throw new ArgumentException($"region Id 必须大于0，且不能大于MaxWorkerId： {MaxDatacenterId}");
+        if (workerId > MaxWorkerId || workerId < 0) throw new ArgumentException($"workerId 必须大于0，且不能大于 MaxWorkerId： {MaxWorkerId}");
+        if (datacenterId > MaxDatacenterId || datacenterId < 0) throw new ArgumentException($"datacenterId 必须大于0，且不能大于 MaxDatacenterId： {MaxDatacenterId}");
         //先检验再赋值
         WorkerId = workerId;
         DatacenterId = datacenterId;

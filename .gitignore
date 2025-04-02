@@ -1,10 +1,10 @@
 ﻿################################################################################
 # 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
 ################################################################################
-
-/SQLServer/.vs/DBSnowSeed.SQLServer
+/.vs
 /SQLServer/bin/Debug
 /SQLServer/obj/Debug
 /SQLServer/DBSnowSeed.SQLServer.sqlproj.user
 /SQLServer/DBSnowSeed.SQLServer.dbmdl
 /SQLServer/DBSnowSeed.SQLServer.jfm
+MySQL/DBSnowSeed.MySQL.vcxproj.user
