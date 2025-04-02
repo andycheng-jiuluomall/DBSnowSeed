@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>DBSnowSeed.Sqlserver</Name>
+    <Name>DBSnowSeed.SQLServer</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{c7e6c419-f788-409d-997e-7ffd195aac68}</ProjectGuid>
@@ -11,8 +11,8 @@
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>DBSnowSeed.Sqlserver</RootNamespace>
-    <AssemblyName>DBSnowSeed.Sqlserver</AssemblyName>
+    <RootNamespace>DBSnowSeed.SQLServer</RootNamespace>
+    <AssemblyName>DBSnowSeed.SQLServer</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
