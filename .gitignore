@@ -8,3 +8,6 @@
 /SQLServer/DBSnowSeed.SQLServer.dbmdl
 /SQLServer/DBSnowSeed.SQLServer.jfm
 MySQL/DBSnowSeed.MySQL.vcxproj.user
+/MySQL/x64
+/PostgreSQL/x64
+/PostgreSQL/DBSnowSeed.PostgreSQL.vcxproj.user
